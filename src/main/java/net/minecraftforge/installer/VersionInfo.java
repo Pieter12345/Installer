@@ -26,6 +26,7 @@ public class VersionInfo {
     public static final VersionInfo INSTANCE = new VersionInfo();
     public final JsonRootNode versionData;
     private final List<OptionalLibrary> optionals = Lists.newArrayList();
+    private final List<Mod> mods = Lists.newArrayList();
 
     public VersionInfo()
     {
@@ -48,6 +49,13 @@ public class VersionInfo {
                         continue;
                     }
                     optionals.add(o);
+                }
+            }
+
+            // Get mods to install.
+            if(this.versionData.isArrayNode("install", "mods")) {
+                for(JsonNode node : this.versionData.getArrayNode("install", "mods")) {
+                    this.mods.add(new Mod(node));
                 }
             }
         }
@@ -198,6 +206,10 @@ public class VersionInfo {
         return INSTANCE.optionals;
     }
 
+    public static List<Mod> getMods() {
+        return INSTANCE.mods;
+    }
+    
     public static List<LibraryInfo> getLibraries(String marker, Predicate<String> filter)
     {
         List<LibraryInfo> ret = Lists.newArrayList();
