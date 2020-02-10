@@ -8,7 +8,10 @@
         "welcome":"Welcome to the simple forge installer.",
         "minecraft":"1.8.9",
         "mirrorList" : "http://files.minecraftforge.net/mirror-brand.list",
-        "logo":"/big_logo.png"
+        "logo":"/big_logo.png",
+        "hideClient": false,
+        "hideServer": true,
+        "hideExtract": true
     },
     "versionInfo": {
         "id": "1.8.9-forge1.8.9-11.15.1.2318-1.8.9",
