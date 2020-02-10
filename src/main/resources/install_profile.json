@@ -1,28 +1,29 @@
 {
 "install": {
   "profileName": "forge",
-  "target":"1.11-forge1.11-13.19.0.2138",
-  "path":"net.minecraftforge:forge:1.11-13.19.0.2138",
-  "version":"forge 1.11-13.19.0.2138",
-  "filePath":"",
+  "target":"1.8.9-forge1.8.9-11.15.1.2318-1.8.9",
+  "path":"net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9",
+  "version":"forge 1.8.9-11.15.1.2318-1.8.9",
+  "filePath":"forge-1.8.9-11.15.1.2318-1.8.9-universal.jar",
   "welcome":"Welcome to the simple forge installer.",
-  "minecraft":"1.11",
+  "minecraft":"1.8.9",
   "mirrorList" : "http://files.minecraftforge.net/mirror-brand.list",
-  "logo":"/big_logo.png",
-  "modList":"absolute"
+  "logo":"/big_logo.png"
 },
 "versionInfo": {
-  "id": "1.11-forge1.11-13.19.0.2138",
-  "time": "2016-11-17T03:22:26+0000",
+  "id": "1.8.9-forge1.8.9-11.15.1.2318-1.8.9",
+  "time": "2017-06-08T04:26:33+0000",
   "releaseTime": "1960-01-01T00:00:00-0700",
   "type": "release",
-  "minecraftArguments": "--username ${auth_player_name} --version ${version_name} --gameDir ${game_directory} --assetsDir ${assets_root} --assetIndex ${assets_index_name} --uuid ${auth_uuid} --accessToken ${auth_access_token} --userType ${user_type} --tweakClass net.minecraftforge.fml.common.launcher.FMLTweaker --versionType Forge",
+  "minecraftArguments": "--username ${auth_player_name} --version ${version_name} --gameDir ${game_directory} --assetsDir ${assets_root} --assetIndex ${assets_index_name} --uuid ${auth_uuid} --accessToken ${auth_access_token} --userProperties ${user_properties} --userType ${user_type} --tweakClass net.minecraftforge.fml.common.launcher.FMLTweaker",
   "mainClass": "net.minecraft.launchwrapper.Launch",
-  "inheritsFrom": "1.11",
-  "jar": "1.11",
+  "minimumLauncherVersion": 14,
+  "assets": "1.8",
+  "inheritsFrom": "1.8.9",
+  "jar": "1.8.9",
   "libraries": [
     {
-      "name": "net.minecraftforge:forge:1.11-13.19.0.2138",
+      "name": "net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9",
       "url": "http://files.minecraftforge.net/maven/"
     },
     {
@@ -136,18 +137,5 @@
       "serverreq":true
     }
   ]
-},
-"optionals": [
-    {
-        "name": "Mercurius",
-        "client": true,
-        "server": true,
-        "default": true,
-        "inject": true,
-        "desc": "A mod that collects statistics about Minecraft and your system.<br>Useful for Forge to understand how Minecraft/Forge are used.",
-        "url": "http://www.minecraftforge.net/forum/index.php?topic=43278.0",
-        "artifact": "net.minecraftforge:MercuriusUpdater:1.11",
-        "maven": "http://files.minecraftforge.net/maven/"
-    }
-]
+}
 }
