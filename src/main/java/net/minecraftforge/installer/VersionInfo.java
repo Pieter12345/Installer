@@ -65,6 +65,13 @@ public class VersionInfo {
         }
     }
 
+    public static String getInstallerWindowName()
+    {
+        return (INSTANCE.versionData.isStringValue("install","installerWindowName")
+                ? INSTANCE.versionData.getStringValue("install","installerWindowName")
+                : "Mod system installer");
+    }
+
     public static String getProfileName()
     {
         return INSTANCE.versionData.getStringValue("install","profileName");
