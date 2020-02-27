@@ -202,7 +202,10 @@ public class InstallerPanel extends JPanel {
 
         choicePanel.setAlignmentX(RIGHT_ALIGNMENT);
         choicePanel.setAlignmentY(CENTER_ALIGNMENT);
-        add(choicePanel);
+        if (choicePanel.getComponentCount() > 1)
+        {
+            add(choicePanel);
+        }
 
         if (VersionInfo.hasOptionals())
         {
