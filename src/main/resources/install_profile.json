@@ -5,8 +5,8 @@
         "path": "net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9",
         "version": "forge 1.8.9-11.15.1.2318-1.8.9",
         "filePath": "forge-1.8.9-11.15.1.2318-1.8.9-universal.jar",
-        "installerWindowName": "Minecraft Forge + ComputerCraftEdu client installer",
-        "welcome": "Welcome to the Forge + ComputerCraftEdu client installer.",
+        "installerWindowName": "Minecraft Forge + ComputerCraft Edu & SC client installer",
+        "welcome": "Welcome to the Forge + ComputerCraft Edu & SC client installer.",
         "minecraft": "1.8.9",
         "logo": "/big_logo.png",
         "hideClient": false,
@@ -16,6 +16,10 @@
             {
                 "name": "ComputerCraftPlusComputerCraftEdu1.79",
                 "url": "http://computercraftedu.com/downloads/ComputerCraftPlusComputerCraftEdu1.79.jar"
+            },
+            {
+                "name": "ComputerCraftSC",
+                "url": "http://files.sciencecentre.online/ComputerCraftSC/latest/ComputerCraftSC.jar"
             }
         ]
     },
