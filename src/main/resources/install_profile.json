@@ -19,7 +19,7 @@
             },
             {
                 "name": "ComputerCraftSC",
-                "url": "http://files.sciencecentre.online/ComputerCraftSC/latest/ComputerCraftSC.jar"
+                "url": "http://mcprogramming.sciencecentre.online:8000/ComputerCraftSC/latest/ComputerCraftSC.jar"
             }
         ]
     },
