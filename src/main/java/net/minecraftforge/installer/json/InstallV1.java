@@ -42,12 +42,14 @@ public class InstallV1 extends Install {
         this.json = v0.json;
         this.logo = v0.logo;
         this.path = v0.path;
+        this.installerWindowName = v0.installerWindowName;
         this.urlIcon = v0.urlIcon;
         this.welcome = v0.welcome;
         this.mirrorList = v0.mirrorList;
         this.hideClient = v0.hideClient;
         this.hideServer = v0.hideServer;
         this.hideExtract = v0.hideExtract;
+        this.mods = v0.mods;
         this.libraries = v0.libraries;
         this.processors = v0.processors;
         this.data = v0.data;
