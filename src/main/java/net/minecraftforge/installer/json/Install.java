@@ -44,6 +44,8 @@ public class Install extends Spec {
     protected String logo;
     // Maven artifact path for the 'main' jar to install.
     protected Artifact path;
+    // Installer window name.
+    protected String installerWindowName;
     // Icon to use for the url button
     protected String urlIcon;
     // Welcome message displayed on main install panel.
@@ -89,6 +91,10 @@ public class Install extends Spec {
 
     public Artifact getPath() {
         return path;
+    }
+
+    public String getInstallerWindowName() {
+        return (this.installerWindowName == null ? "Mod system installer" : this.installerWindowName);
     }
 
     public String getUrlIcon() {
