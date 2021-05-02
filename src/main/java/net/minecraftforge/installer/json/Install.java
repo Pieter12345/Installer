@@ -46,6 +46,8 @@ public class Install
     private String logo;
     // Maven artifact path for the 'main' jar to install.
     private Artifact path;
+    // Installer window name.
+    private String installerWindowName;
     // Icon to use for the url button
     private String urlIcon;
     // Welcome message displayed on main install panel.
@@ -95,6 +97,10 @@ public class Install
 
     public Artifact getPath() {
         return path;
+    }
+
+    public String getInstallerWindowName() {
+        return (this.installerWindowName == null ? "Mod system installer" : this.installerWindowName);
     }
 
     public String getUrlIcon() {
