@@ -56,6 +56,8 @@ public class Install
     private String mirrorList;
     //Hides an entry from the install UI
     private boolean hideClient, hideServer, hideExtract = false;
+    // Mods to install.
+    private Mod[] mods;
     // Extra libraries needed by processors, that may differ from the installer version's library list. Uses the same format as Mojang for simplicities sake.
     private Version.Library[] libraries;
     // Executable jars to be run after all libraries have been downloaded.
@@ -135,6 +137,10 @@ public class Install
 
     public boolean hideExtract() {
         return hideExtract;
+    }
+
+    public Mod[] getMods() {
+        return libraries == null ? new Mod[0] : this.mods;
     }
 
     public Version.Library[] getLibraries() {

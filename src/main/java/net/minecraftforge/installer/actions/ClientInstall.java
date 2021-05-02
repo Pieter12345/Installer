@@ -19,12 +19,19 @@
 package net.minecraftforge.installer.actions;
 
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.function.Predicate;
+
+import javax.swing.JOptionPane;
+
 import net.minecraftforge.installer.DownloadUtils;
 import net.minecraftforge.installer.json.Install;
+import net.minecraftforge.installer.json.Mod;
 import net.minecraftforge.installer.json.Util;
 import net.minecraftforge.installer.json.Version;
 import net.minecraftforge.installer.json.Version.Download;
@@ -147,6 +154,69 @@ public class ClientInstall extends Action {
         monitor.stage("Injecting profile");
         if (!injectProfile(launcherProfiles))
             return false;
+
+        // Install provided mods.
+        Mod[] mods = this.profile.getMods();
+        if(mods.length > 0) {
+
+            // Create mods directory.
+            File modsDir = new File(target, "mods");
+            if(!modsDir.isDirectory()) {
+                modsDir.mkdir();
+            }
+
+            // Unpack or download mods.
+            for(Mod mod : mods) {
+                File modFile = new File(modsDir, mod.getName() + ".jar");
+                InputStream inStream = null;
+
+                // Get input stream.
+                if(mod.getPath().startsWith("http://") || mod.getPath().startsWith("https://")) {
+                    try {
+                        URL url = new URL(mod.getPath());
+                        URLConnection con = url.openConnection();
+                        con.setConnectTimeout(5000);
+                        con.setReadTimeout(5000);
+                        con.setRequestProperty("User-Agent",
+                                "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0");
+                        inStream = con.getInputStream();
+                    } catch (MalformedURLException e) {
+                        JOptionPane.showMessageDialog(null, "Invalid URL format in installer configuration for mod: "
+                                + mod.getName() + ", url: " + mod.getPath(), "Error", JOptionPane.ERROR_MESSAGE);
+                        return false;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Unable to download mod: "
+                                + mod.getName() + ", url: " + mod.getPath(), "Error", JOptionPane.ERROR_MESSAGE);
+                        return false;
+                    }
+                } else {
+                    inStream = ClientInstall.class.getResourceAsStream(mod.getPath());
+                    if(inStream == null) {
+                        JOptionPane.showMessageDialog(null, "Mod missing in installer jar: "
+                                + mod.getName() + ", path: " + mod.getPath(), "Error", JOptionPane.ERROR_MESSAGE);
+                        return false;
+                    }
+                }
+
+                // Write stream to file.
+                try {
+                    FileOutputStream outStream = new FileOutputStream(modFile);
+                    byte[] buffer = new byte[8192];
+                    int amount;
+                    while((amount = inStream.read(buffer)) > 0) {
+                        outStream.write(buffer, 0, amount);
+                    }
+                    inStream.close();
+                    outStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "There was an error while installing mod: "
+                            + mod.getName(), "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+            }
+        }
 
         return true;
     }
