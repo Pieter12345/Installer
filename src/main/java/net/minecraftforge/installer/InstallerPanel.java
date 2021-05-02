@@ -370,20 +370,20 @@ public class InstallerPanel extends JPanel {
         Action action = actions.get(choiceButtonGroup.getSelection().getActionCommand()).apply(null);
         boolean valid = action.isPathValid(targetDir);
 
-        if (profile.getMirror() != null)
-        {
-            sponsorButton.setText(action.getSponsorMessage());
-            sponsorButton.setToolTipText(profile.getMirror().getHomepage());
-            if (profile.getMirror().getImageAddress() != null)
-                sponsorButton.setIcon(profile.getMirror().getImage());
-            else
-                sponsorButton.setIcon(null);
-            sponsorPanel.setVisible(true);
-        }
-        else
-        {
+//        if (profile.getMirror() != null)
+//        {
+//            sponsorButton.setText(action.getSponsorMessage());
+//            sponsorButton.setToolTipText(profile.getMirror().getHomepage());
+//            if (profile.getMirror().getImageAddress() != null)
+//                sponsorButton.setIcon(profile.getMirror().getImage());
+//            else
+//                sponsorButton.setIcon(null);
+//            sponsorPanel.setVisible(true);
+//        }
+//        else
+//        {
             sponsorPanel.setVisible(false);
-        }
+//        }
         if (valid)
         {
             selectedDirText.setForeground(null);
