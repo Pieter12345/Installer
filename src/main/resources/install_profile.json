@@ -24,6 +24,14 @@
             "url": "http://mcprogramming.sciencecentre.online:8000/ComputerCraftSC/latest/ComputerCraftSC.jar"
         },
         {
+            "name": "Dialogs",
+            "url": "http://mcprogramming.sciencecentre.online:8000/Dialogs/latest/Dialogs.jar"
+        },
+        {
+            "name": "ForgeNPCs",
+            "url": "http://mcprogramming.sciencecentre.online:8000/ForgeNPCs/latest/ForgeNPCs.jar"
+        },
+        {
             "name": "CC-Tweaked",
             "url": "https://media.forgecdn.net/files/3236/650/cc-tweaked-1.16.4-1.95.3.jar"
         }
