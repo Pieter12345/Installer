@@ -21,15 +21,15 @@
     "mods": [
         {
             "name": "ComputerCraftSC",
-            "url": "http://mcprogramming.sciencecentre.online:8000/ComputerCraftSC/latest/ComputerCraftSC.jar"
+            "url": "http://files.sciencecentre.online/ComputerCraftSC/latest/ComputerCraftSC.jar"
         },
         {
             "name": "Dialogs",
-            "url": "http://mcprogramming.sciencecentre.online:8000/Dialogs/latest/Dialogs.jar"
+            "url": "http://files.sciencecentre.online/Dialogs/latest/Dialogs.jar"
         },
         {
             "name": "ForgeNPCs",
-            "url": "http://mcprogramming.sciencecentre.online:8000/ForgeNPCs/latest/ForgeNPCs.jar"
+            "url": "http://files.sciencecentre.online/ForgeNPCs/latest/ForgeNPCs.jar"
         },
         {
             "name": "CC-Tweaked",
