@@ -28,8 +28,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-import javax.swing.JOptionPane;
-
 import net.minecraftforge.installer.DownloadUtils;
 import net.minecraftforge.installer.json.InstallV1;
 import net.minecraftforge.installer.json.Mod;
@@ -185,20 +183,17 @@ public class ClientInstall extends Action {
                                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0");
                         inStream = con.getInputStream();
                     } catch (MalformedURLException e) {
-                        JOptionPane.showMessageDialog(null, "Invalid URL format in installer configuration for mod: "
-                                + mod.getName() + ", url: " + mod.getPath(), "Error", JOptionPane.ERROR_MESSAGE);
+                    	this.error("Invalid URL format in installer configuration for mod: "
+                                + mod.getName() + ", url: " + mod.getPath());
                         return false;
                     } catch (IOException e) {
-                        e.printStackTrace();
-                        JOptionPane.showMessageDialog(null, "Unable to download mod: "
-                                + mod.getName() + ", url: " + mod.getPath(), "Error", JOptionPane.ERROR_MESSAGE);
+                        this.error("Unable to download mod: " + mod.getName() + ", url: " + mod.getPath());
                         return false;
                     }
                 } else {
                     inStream = ClientInstall.class.getResourceAsStream(mod.getPath());
                     if(inStream == null) {
-                        JOptionPane.showMessageDialog(null, "Mod missing in installer jar: "
-                                + mod.getName() + ", path: " + mod.getPath(), "Error", JOptionPane.ERROR_MESSAGE);
+                        this.error("Mod missing in installer jar: " + mod.getName() + ", path: " + mod.getPath());
                         return false;
                     }
                 }
@@ -214,9 +209,8 @@ public class ClientInstall extends Action {
                     inStream.close();
                     outStream.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "There was an error while installing mod: "
-                            + mod.getName(), "Error", JOptionPane.ERROR_MESSAGE);
+                    this.error("There was an error while installing mod: " + mod.getName()
+                    		+ ". Details: " + e.getClass().getSimpleName() + " - " + e.getMessage());
                     return false;
                 }
             }
