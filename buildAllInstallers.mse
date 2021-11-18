@@ -1,0 +1,77 @@
+# Builds all installers.
+
+string @workspaceDir = file_resolve('.');
+string @buildsDir = @workspaceDir.'/build/libs';
+string @installerSpecificResourcesBaseDir = @workspaceDir.'/installerSpecificResources';
+
+# Run gradlew build.
+msg('Building installer.');
+@feedbackClosure = closure(@line) {
+    msg('\t'.@line);
+}
+shell_adv(@workspaceDir.'/gradlew.bat build', array(
+    'workingDir': @workspaceDir,
+    'stdout': @feedbackClosure,
+    'stderr': @feedbackClosure,
+    'exit': closure(@exitCode) {
+        if(@exitCode != 0) {
+            msg('Build errored with exit code: '.@exitCode);
+            prompt_char('Press any key to continue.');
+            exit();
+        }
+	}
+));
+
+# Get latest built jar file.
+array @jarFileMatches = array_sort(array_filter(chf_directory_list(@buildsDir), closure(@key, @val) {
+		return(string_starts_with(@val, 'installer-') && string_ends_with(@val, '-shrunk.jar'));
+	}), 'STRING');
+if(array_size(@jarFileMatches) === 0) {
+	msg('Could not find built installer jar file.');
+	prompt_char('Press any key to continue.');
+	exit();
+}
+string @jarFileName = @jarFileMatches[0];
+string @jarFilePath = @buildsDir.'/'.@jarFileName;
+msg('Detected latest built jar file: '.@jarFilePath);
+
+# Package installers.
+foreach(@buildName in array('production', 'devserver', 'workshop')) {
+	string @installerFileName = '['.to_upper(@buildName).'] Minecraft Forge 1.16.5 + ScienceCentre mods installer.jar';
+	string @installerFilePath = @buildsDir.'/'.@installerFileName;
+	msg('Packaging installer: '.@buildName);
+	
+	# Copy installer jar.
+	try {
+		chf_copy(@jarFilePath, @installerFilePath, true, false);
+	} catch (Exception @ex) {
+		msg('Error: Could not copy jar to target location: '.@ex['message']);
+		prompt_char('Press any key to continue.');
+		exit();
+	}
+	
+	# Add installer specific resources into the jar.
+	string @installerSpecificResourcesDir = @installerSpecificResourcesBaseDir.'/'.@buildName;
+	array @specificResourceFiles = chf_directory_list(@installerSpecificResourcesDir);
+	if(array_size(@specificResourceFiles) !== 0) {
+		string @jarUpdateCommand = 'jar --update --file="'.@installerFilePath.'" -C "'.@installerSpecificResourcesDir
+				.'" "'.array_implode(@specificResourceFiles, '" -C "'.@installerSpecificResourcesDir.'" "').'"';
+		shell_adv(@jarUpdateCommand, array(
+			'workingDir': @workspaceDir,
+			'stdout': @feedbackClosure,
+			'stderr': @feedbackClosure,
+			'exit': closure(@exitCode) {
+				if(@exitCode != 0) {
+					msg('Error: Could not package resources into the installer.'
+							.' Shell process terminated with exit code: '.@exitCode.'.'
+							.'\nShell command: '.@jarUpdateCommand);
+					prompt_char('Press any key to continue.');
+					exit();
+				}
+			}
+		));
+	}
+}
+msg('Done.');
+prompt_char('Press any key to continue.');
+exit();
