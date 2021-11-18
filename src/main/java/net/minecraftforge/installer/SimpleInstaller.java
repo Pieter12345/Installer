@@ -86,6 +86,7 @@ public class SimpleInstaller
         OptionSpec<Void> offlineOption = parser.accepts("offline", "Don't attempt any network calls");
         OptionSpec<Void> debugOption = parser.accepts("debug", "Run in debug mode -- don't delete any files");
         OptionSpec<URL> mirrorOption = parser.accepts("mirror", "Use a specific mirror URL").withRequiredArg().ofType(URL.class);
+        OptionSpec<File> clientInstallOption = parser.accepts("installClient", "Performs a client install at the given or otherwise automatically detected Minecraft directory").withOptionalArg().ofType(File.class).defaultsTo(getMCDir());
         OptionSet optionSet = parser.parse(args);
 
         if (optionSet.has(helpOption)) {
@@ -116,6 +117,9 @@ public class SimpleInstaller
         } else if (optionSet.has(extractOption)) {
             action = Actions.EXTRACT;
             target = optionSet.valueOf(extractOption);
+        } else if (optionSet.has(clientInstallOption)) {
+            action = Actions.CLIENT;
+            target = optionSet.valueOf(clientInstallOption);
         }
 
         if (action != null)
