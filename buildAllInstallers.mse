@@ -36,7 +36,7 @@ string @jarFilePath = @buildsDir.'/'.@jarFileName;
 msg('Detected latest built jar file: '.@jarFilePath);
 
 # Package installers.
-foreach(@buildName in array('production', 'devserver', 'workshop')) {
+foreach(@buildName in array('production', 'devserver', 'workshop', 'kiosk')) {
 	string @installerFileName = '['.to_upper(@buildName).'] Minecraft Forge 1.16.5 + ScienceCentre mods installer.jar';
 	string @installerFilePath = @buildsDir.'/'.@installerFileName;
 	msg('Packaging installer: '.@buildName);
