@@ -183,7 +183,7 @@ public class ClientInstall extends Action {
                                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0");
                         inStream = con.getInputStream();
                     } catch (MalformedURLException e) {
-                    	this.error("Invalid URL format in installer configuration for mod: "
+                        this.error("Invalid URL format in installer configuration for mod: "
                                 + mod.getName() + ", url: " + mod.getPath());
                         return false;
                     } catch (IOException e) {
@@ -210,7 +210,7 @@ public class ClientInstall extends Action {
                     outStream.close();
                 } catch (IOException e) {
                     this.error("There was an error while installing mod: " + mod.getName()
-                    		+ ". Details: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+                            + ". Details: " + e.getClass().getSimpleName() + " - " + e.getMessage());
                     return false;
                 }
             }
