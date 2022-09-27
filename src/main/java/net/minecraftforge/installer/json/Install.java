@@ -141,7 +141,7 @@ public class Install extends Spec {
     }
 
     public Mod[] getMods() {
-        return libraries == null ? new Mod[0] : this.mods;
+        return this.mods == null ? new Mod[0] : this.mods;
     }
 
     public Version.Library[] getLibraries() {
