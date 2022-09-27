@@ -31,7 +31,7 @@ if(array_size(@jarFileMatches) === 0) {
 	prompt_char('Press any key to continue.');
 	exit();
 }
-string @jarFileName = @jarFileMatches[0];
+string @jarFileName = @jarFileMatches[array_size(@jarFileMatches) - 1];
 string @jarFilePath = @buildsDir.'/'.@jarFileName;
 msg('Detected latest built jar file: '.@jarFilePath);
 
