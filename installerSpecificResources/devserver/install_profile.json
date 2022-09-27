@@ -18,19 +18,19 @@
     "mods": [
         {
             "name": "ComputerCraftSC",
-            "url": "http://files.sciencecentre.online/ComputerCraftSC/dev/ComputerCraftSC.jar"
+            "url": "https://files.sciencecentre.online/ComputerCraftSC/dev/ComputerCraftSC.jar"
         },
         {
             "name": "Dialogs",
-            "url": "http://files.sciencecentre.online/Dialogs/dev/Dialogs.jar"
+            "url": "https://files.sciencecentre.online/Dialogs/dev/Dialogs.jar"
         },
         {
             "name": "ForgeNPCs",
-            "url": "http://files.sciencecentre.online/ForgeNPCs/dev/ForgeNPCs.jar"
+            "url": "https://files.sciencecentre.online/ForgeNPCs/dev/ForgeNPCs.jar"
         },
         {
             "name": "SCClientUtils",
-            "url": "http://files.sciencecentre.online/SCClientUtils/dev/SCClientUtils.jar"
+            "url": "https://files.sciencecentre.online/SCClientUtils/dev/SCClientUtils.jar"
         },
         {
             "name": "CC-Tweaked",
