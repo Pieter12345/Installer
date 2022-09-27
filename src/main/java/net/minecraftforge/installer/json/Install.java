@@ -30,6 +30,10 @@ import net.minecraftforge.installer.DownloadUtils;
 import net.minecraftforge.installer.SimpleInstaller;
 
 public class Install extends Spec {
+    // Installer version. Picked by the installer provider.
+    protected String installerVersion;
+    // Installer version info URL. Picked by the installer provider.
+    protected String installerVersionInfoURL;
     // Profile name to install and direct at this new version
     protected String profile;
     // Version name to install to.
@@ -66,6 +70,14 @@ public class Install extends Spec {
     // non-serialized values
     private Mirror mirror;
     private boolean triedMirrors = false;
+
+    public String getInstallerVersion() {
+        return this.installerVersion;
+    }
+
+    public String getInstallerVersionInfoURL() {
+        return this.installerVersionInfoURL;
+    }
 
     public String getProfile() {
         return profile;

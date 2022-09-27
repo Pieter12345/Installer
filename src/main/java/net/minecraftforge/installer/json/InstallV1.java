@@ -35,6 +35,8 @@ public class InstallV1 extends Install {
     protected String serverJarPath;
 
     public InstallV1(Install v0) {
+    	this.installerVersion = v0.installerVersion;
+    	this.installerVersionInfoURL = v0.installerVersionInfoURL;
         this.profile = v0.profile;
         this.version = v0.version;
         this.icon = v0.icon;

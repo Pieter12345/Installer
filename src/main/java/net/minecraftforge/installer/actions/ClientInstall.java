@@ -34,8 +34,12 @@ import net.minecraftforge.installer.json.Mod;
 import net.minecraftforge.installer.json.Util;
 import net.minecraftforge.installer.json.Version;
 import net.minecraftforge.installer.json.Version.Download;
+
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 
 public class ClientInstall extends Action {
 
@@ -45,6 +49,84 @@ public class ClientInstall extends Action {
 
     @Override
     public boolean run(File target, Predicate<String> optionals, File installer) throws ActionCanceledException {
+ 
+        // Run installer version check.
+        String installerVersion = this.profile.getInstallerVersion();
+        String installerVersionInfoURLStr = this.profile.getInstallerVersionInfoURL();
+        if(installerVersion != null && installerVersionInfoURLStr != null) {
+
+            // Get installer version info input stream.
+            InputStream inStream;
+            try {
+                URL url = new URL(installerVersionInfoURLStr);
+                URLConnection con = url.openConnection();
+                con.setConnectTimeout(5000);
+                con.setReadTimeout(5000);
+                con.setRequestProperty("User-Agent",
+                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0");
+                inStream = con.getInputStream();
+            } catch (MalformedURLException e) {
+                this.error("Invalid URL format for installer version info URL in installer configuration: "
+                        + installerVersionInfoURLStr);
+                return false;
+            } catch (IOException e) {
+                this.error("Unable to download installer version info from URL: " + installerVersionInfoURLStr);
+                return false;
+            }
+
+            // Parse installer version info to JSON.
+            JsonElement root;
+            try {
+                root = JsonParser.parseReader(new JsonReader(
+                        new BufferedReader(new InputStreamReader(inStream, StandardCharsets.UTF_8))));
+            } catch (JsonParseException e) {
+                if(e.getCause() instanceof IOException) {
+                    this.error("Failed to download installer version info.\nDetails: "
+                            + e.getCause().getClass().getSimpleName() + " - " + e.getCause().getMessage());
+                } else if(e.getCause() != null) {
+                    this.error("Downloaded installer version info is not a valid json file."
+                            + " Contact the provider of this installer for support.\nDetails: "
+                            + e.getCause().getClass().getSimpleName() + " - " + e.getCause().getMessage());
+                } else {
+                    this.error("Downloaded installer version info is not a valid json file."
+                            + " Contact the provider of this installer for support.");
+                }
+                return false;
+            }
+
+            // Run version check.
+            if(!root.isJsonObject()) {
+                this.error("Downloaded installer version info has unexpected json data.");
+                return false;
+            }
+            JsonObject rootObj = root.getAsJsonObject();
+            if(!rootObj.has("latestInstallerVersion")) {
+                this.error("Missing \"latestInstallerVersion\" key in downloaded installer version info json.");
+                return false;
+            }
+            String latestInstallerVersion = rootObj.get("latestInstallerVersion").getAsString();
+            boolean versionAccepted = installerVersion.equals(latestInstallerVersion);
+            if(!versionAccepted && rootObj.has("additionalSupportedInstallerVersions")
+                    && rootObj.get("additionalSupportedInstallerVersions").isJsonArray()) {
+                for(JsonElement elem : rootObj.get("additionalSupportedInstallerVersions").getAsJsonArray()) {
+                    if(installerVersion.equals(elem.getAsString())) {
+                        versionAccepted = true;
+                        break;
+                    }
+                }
+            }
+            if(!versionAccepted) {
+                String errorMessage = "Installer outdated.\nCurrent version: " + installerVersion
+                        + "\nLatest version: " + latestInstallerVersion + ".";
+                if(rootObj.has("installerDownloadPageURL")) {
+                    String installerDownloadPageURL = rootObj.get("installerDownloadPageURL").getAsString();
+                    errorMessage += "\nDownload the latest installer at: " + installerDownloadPageURL;
+                }
+                this.error(errorMessage);
+                return false;
+            }
+        }
+
         if (!target.exists()) {
             error("There is no minecraft installation at: " + target);
             return false;
