@@ -117,7 +117,7 @@ public class ClientInstall extends Action {
             }
             if(!versionAccepted) {
                 String errorMessage = "Installer outdated.\nCurrent version: " + installerVersion
-                        + "\nLatest version: " + latestInstallerVersion + ".";
+                        + ".\nLatest version: " + latestInstallerVersion + ".";
                 if(rootObj.has("installerDownloadPageURL")) {
                     String installerDownloadPageURL = rootObj.get("installerDownloadPageURL").getAsString();
                     errorMessage += "\nDownload the latest installer at: " + installerDownloadPageURL;
